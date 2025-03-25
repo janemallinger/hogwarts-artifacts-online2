@@ -56,4 +56,14 @@ public class wizard implements Serializable {
     public Interger getNumberOfArtifacts() {
         return this.artifacts.size();
     }
+
+    public void removeAllArtifacts() {
+        this.artifacts.stream().forEach(artifact -> artifact.setOwner(null));
+        this.artifacts = null;
+    }
+
+    public void removeArtifact(artifact artifactToBeAssigned) {
+        artifactToBeAssigned.setOwner(null);
+        this.artifacts.remove(artifactToBeAssigned);
+    }
 }
