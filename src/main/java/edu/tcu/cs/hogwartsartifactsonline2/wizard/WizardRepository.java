@@ -1,0 +1,7 @@
+package edu.tcu.cs.hogwartsartifactsonline2.wizard;
+
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface WizardRepository  extends JpaRepository<Wizard, Interger>{
+}
