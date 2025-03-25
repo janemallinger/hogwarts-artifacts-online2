@@ -1,5 +1,7 @@
 package edu.tcu.cs.hogwartsartifactsonline2;
 
+import edu.tcu.cs.hogwartsartifactsonline2.artifact.ArtifactRepository;
+import edu.tcu.cs.hogwartsartifactsonline2.artifact.artifact;
 import edu.tcu.cs.hogwartsartifactsonline2.wizard.WizardRepository;
 import edu.tcu.cs.hogwartsartifactsonline2.wizard.WizardService;
 import edu.tcu.cs.hogwartsartifactsonline2.wizard.wizard;
@@ -28,6 +30,9 @@ public class WizardServiceTest {
 
     @Mock
     WizardRepository wizardRepository;
+
+    @Mock
+    ArtifactRepository artifactRepository;
 
     @InjectMocks
     WizardService wizardService;
@@ -192,5 +197,84 @@ public class WizardServiceTest {
 
         //Then
         verify(this.wizardRepository, times(1)).findById(1);
+    }
+
+    @Test
+    void testAssignArtifactSuccess() {
+        //Given
+        artifact a = new artifact();
+        a.setId("1250808601744904192");
+        a.setName("cloak");
+        a.setDescription("It's a cloak");
+        a.setImageUrl("ImageUrl");
+
+        wizard w2 = new wizard();
+        w2.setId(2);
+        w2.setName("Harry");
+        w2.addArtifact(a);
+
+        wizard w3 = new wizard();
+        w3.setId(3);
+        w3.setName("Neville");
+
+        given(this.artifactRepository.findById("1250808601744904192")).willReturn(Optional.of(a));
+        given(this.wizardRepository.findById(3)).willReturn(Optional.of(w3));
+
+
+        //When
+        this.wizardService.assignArtifact(3, "1250808601744904192");
+
+        //Then
+        assertThat(a.getOwner().getId()).equalTo(3);
+        assertThat(w3.getArtifacts()).contains(a);
+
+    }
+
+    @Test
+    void testAssignArtifactErrorWithNonExistentWizardId() {
+        //Given
+        artifact a = new artifact();
+        a.setId("1250808601744904192");
+        a.setName("cloak");
+        a.setDescription("It's a cloak");
+        a.setImageUrl("ImageUrl");
+
+        wizard w2 = new wizard();
+        w2.setId(2);
+        w2.setName("Harry");
+        w2.addArtifact(a);
+
+        given(this.artifactRepository.findById("1250808601744904192")).willReturn(Optional.of(a));
+        given(this.wizardRepository.findById(3)).willReturn(Optional.empty());
+
+
+        //When
+        Throwable thrown = assertThrows(ObjectNotFoundException.class, () -> {
+            this.wizardService.assignArtifact(3, "1250808601744904192");
+        });
+
+        //Then
+        assertThat(thrown)
+                .isInstanceOf(ObjectNotFoundException.class).hasMessage("Could not find");
+        assertThat(a.getOwner().getId()).equalTo(2);
+
+
+    }
+
+    @Test
+    void testAssignArtifactWithNonExistentArtifactId() {
+        //Given
+        given(this.artifactRepository.findById("1250808601744904192")).willReturn(Optional.empty());
+
+
+        //When
+        Throwable thrown = assertThrows(ObjectNotFoundException.class, () -> {
+            this.wizardService.assignArtifact(3, "1250808601744904192");
+        });
+
+        //Then
+        assertThat(thrown)
+                .isInstanceOf(ObjectNotFoundException.class).hasMessage("Could not find");
+
     }
 }
