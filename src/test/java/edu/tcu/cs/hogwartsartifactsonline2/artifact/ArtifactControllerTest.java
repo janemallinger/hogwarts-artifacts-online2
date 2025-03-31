@@ -1,10 +1,6 @@
-package edu.tcu.cs.hogwartsartifactsonline2;
+package edu.tcu.cs.hogwartsartifactsonline2.artifact;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.tcu.cs.hogwartsartifactsonline2.artifact.ArtifactNotFoundException;
-import edu.tcu.cs.hogwartsartifactsonline2.artifact.ArtifactService;
-import edu.tcu.cs.hogwartsartifactsonline2.artifact.artifact;
 import edu.tcu.cs.hogwartsartifactsonline2.artifact.dto.ArtifactDto;
 import edu.tcu.cs.hogwartsartifactsonline2.system.StatusCode;
 import org.hamcrest.Matchers;
@@ -20,7 +16,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 class ArtifactControllerTest {
 
     @Autowired
@@ -41,6 +36,7 @@ class ArtifactControllerTest {
 
     @MockitoBean
     ArtifactService artifactService;
+
     List<artifact> artifacts;
 
     @Autowired

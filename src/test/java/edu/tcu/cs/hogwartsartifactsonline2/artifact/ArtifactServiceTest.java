@@ -1,9 +1,5 @@
-package edu.tcu.cs.hogwartsartifactsonline2;
+package edu.tcu.cs.hogwartsartifactsonline2.artifact;
 
-import edu.tcu.cs.hogwartsartifactsonline2.artifact.ArtifactNotFoundException;
-import edu.tcu.cs.hogwartsartifactsonline2.artifact.ArtifactRepository;
-import edu.tcu.cs.hogwartsartifactsonline2.artifact.ArtifactService;
-import edu.tcu.cs.hogwartsartifactsonline2.artifact.artifact;
 import edu.tcu.cs.hogwartsartifactsonline2.artifact.utils.IdWorker;
 import edu.tcu.cs.hogwartsartifactsonline2.wizard.wizard;
 import org.junit.jupiter.api.AfterEach;
