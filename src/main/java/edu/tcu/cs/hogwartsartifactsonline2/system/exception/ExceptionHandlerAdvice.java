@@ -3,6 +3,7 @@ package edu.tcu.cs.hogwartsartifactsonline2.system.exception;
 import edu.tcu.cs.hogwartsartifactsonline2.artifact.ArtifactNotFoundException;
 import edu.tcu.cs.hogwartsartifactsonline2.system.Result;
 import edu.tcu.cs.hogwartsartifactsonline2.system.StatusCode;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -11,14 +12,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestControllerAdvice
 public class ExceptionHandlerAdvice {
 
-    @ExceptionHandler(ArtifactNotFoundException.class)
+    @ExceptionHandler(ObjectNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    Result handleArtifactNotFoundException(ArtifactNotFoundException ex) {
+    Result handleObjectNotFoundException(ObjectNotFoundException ex) {
         return new Result(false, StatusCode.NOT_FOUND, ex.getMessage());
     }
 
@@ -36,6 +38,36 @@ public class ExceptionHandlerAdvice {
             map.put(key, val);
         });
         return new Result(false, StatusCode.INVALID_ARGUMENT, "no", map);
+    }
+
+    @ExceptionHandler({UsernameNotFoundException.class, BadCradentialsException.class})
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    Result handleAuthenticationException(Exception ex) {
+        return new Result(false, StatusCode.UNAUTHORIZED, "username or password is incorrect", ex.getMessage());
+    }
+
+    @ExceptionHandler(AccountStatusException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    Result handleAccountException(AccountStatusException ex) {
+        return new Result(false, StatusCode.UNAUTHORIZED, "user account is abnormal", ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidBearerTokenException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    Result handleInvalidBearerTokenException(InvalidBearerTokenException ex) {
+        return new Result(false, StatusCode.UNAUTHORIZED, "The access token provided is abnormal", ex.getMessage());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    Result handleAccessDeniedTokenException(AccessDeniedException ex) {
+        return new Result(false, StatusCode.FORBIDDEN, "No Permission", ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    Result handleOtherException(Exception ex) {
+        return new Result(false, StatusCode.INTERNAL_SERVER_ERROR, "A server internal error occured", ex.getMessage());
     }
 
 }

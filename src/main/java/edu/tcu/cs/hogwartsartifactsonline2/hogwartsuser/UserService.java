@@ -8,12 +8,15 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    private PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<HogwartsUser> findAll() {
@@ -26,6 +29,7 @@ public class UserService {
     }
 
     public HogwartsUser save(HogwartsUser newHogwartsUser) {
+        newHogwartsUser.setPassword(this.passwordEncoder.encode(newHogwartsUser.getPassword()));
         return this.userRepository.save(newHogwartsUser);
     }
 
@@ -48,6 +52,13 @@ public class UserService {
         this.userRepository.findById(userId)
                 .orElseThrow(() -> new ObjectNotFoundException("user", userId));
         this.userRepository.deleteById(userId);
+    }
+
+    @Override
+    public UserDetails loadUserByusername(String username) throws UsernameNotFoundException {
+        return this.userRepository.findByUsername(username)
+                .map(hogwartsUser -> new MyUserPrincipal(hogwartsUser))
+                .orElseThrow(() -> new UserNotFoundException("username " + username + " is not found."));
     }
 
 }
