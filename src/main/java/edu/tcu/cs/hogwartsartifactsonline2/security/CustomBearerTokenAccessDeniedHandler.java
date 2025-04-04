@@ -4,6 +4,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
@@ -12,7 +13,7 @@ import java.nio.file.AccessDeniedException;
 
 
 @Component
-public class CustomBearerTokenAccessDeniedHandler implements AccessDeniedHandler{
+public class CustomBearerTokenAccessDeniedHandler implements AccessDeniedHandler {
 
     private final HandlerExceptionResolver resolver;
 
@@ -21,8 +22,7 @@ public class CustomBearerTokenAccessDeniedHandler implements AccessDeniedHandler
     }
 
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+    public void handle(HttpServletRequest request, HttpServletResponse response, org.springframework.security.access.AccessDeniedException accessDeniedException) throws IOException, ServletException {
         this.resolver.resolveException(request, response, null, accessDeniedException);
-
     }
 }
