@@ -2,6 +2,10 @@ package edu.tcu.cs.hogwartsartifactsonline2.hogwartsuser;
 
 import jakarta.transaction.Transactional;
 import org.hibernate.ObjectNotFoundException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,10 +59,9 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByusername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return this.userRepository.findByUsername(username)
                 .map(hogwartsUser -> new MyUserPrincipal(hogwartsUser))
                 .orElseThrow(() -> new UserNotFoundException("username " + username + " is not found."));
     }
-
 }
