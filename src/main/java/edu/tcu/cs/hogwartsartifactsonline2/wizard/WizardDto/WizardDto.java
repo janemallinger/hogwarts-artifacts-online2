@@ -1,6 +1,6 @@
 package edu.tcu.cs.hogwartsartifactsonline2.wizard.WizardDto;
 
-public record WizardDto(Interger id,
+public record WizardDto(Integer id,
                         String name,
-                        Interger numberOfArtifacts) {
+                        Integer numberOfArtifacts) {
 }

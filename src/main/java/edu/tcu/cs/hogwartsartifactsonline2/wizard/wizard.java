@@ -53,7 +53,7 @@ public class wizard implements Serializable {
         this.artifacts.add(artifact);
     }
 
-    public Interger getNumberOfArtifacts() {
+    public Integer getNumberOfArtifacts() {
         return this.artifacts.size();
     }
 

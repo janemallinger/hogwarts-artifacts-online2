@@ -32,7 +32,7 @@ public class JwtProvider {
                 .issuer("self")
                 .issuedAt(now)
                 .expiresAt(now.plus(expiresIn, ChronoUnit.HOURS))
-                .subject(authentication.getName())
+                .subject(authentication.name())
                 .claim("authorities", authorities)
                 .build();
 
