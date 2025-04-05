@@ -7,6 +7,7 @@ import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.validation.FieldError;
@@ -48,6 +49,12 @@ public class ExceptionHandlerAdvice {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     Result handleAuthenticationException(Exception ex) {
         return new Result(false, StatusCode.UNAUTHORIZED, "username or password is incorrect", ex.getMessage());
+    }
+
+    @ExceptionHandler(InsufficientAuthenticationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    Result handleInsufficientAuthenticationException(InsufficientAuthenticationException ex) {
+        return new Result(false, StatusCode.UNAUTHORIZED, "Login credentials are missing", ex.getMessage());
     }
 
     @ExceptionHandler(AccountStatusException.class)
