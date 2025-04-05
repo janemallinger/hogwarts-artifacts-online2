@@ -5,6 +5,10 @@ import edu.tcu.cs.hogwartsartifactsonline2.system.Result;
 import edu.tcu.cs.hogwartsartifactsonline2.system.StatusCode;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AccountStatusException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -40,7 +44,7 @@ public class ExceptionHandlerAdvice {
         return new Result(false, StatusCode.INVALID_ARGUMENT, "no", map);
     }
 
-    @ExceptionHandler({UsernameNotFoundException.class, BadCradentialsException.class})
+    @ExceptionHandler({UsernameNotFoundException.class, BadCredentialsException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     Result handleAuthenticationException(Exception ex) {
         return new Result(false, StatusCode.UNAUTHORIZED, "username or password is incorrect", ex.getMessage());

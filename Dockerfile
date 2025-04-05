@@ -8,8 +8,7 @@ FROM eclipse-temurin:17-jre
 WORKDIR application
 COPY --from=builder application/dependencies/ ./
 COPY --from=builder application/spring-boot-loader/ ./
-COPY --from=builder application/snapsjot-dependencies/ ./
+COPY --from=builder application/snapshot-dependencies/ ./
 COPY --from=builder application/application/ ./
-ENTRYPOINT ["java", "prg.springframework.boot.loader.JarLauncher"]
-
-EXPOSE 8080
+ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
+# The JarLauncher class has been relocated to a new package since Spring Boot 3.2.0.

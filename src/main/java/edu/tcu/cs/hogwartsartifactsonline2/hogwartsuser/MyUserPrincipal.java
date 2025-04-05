@@ -1,6 +1,11 @@
 package edu.tcu.cs.hogwartsartifactsonline2.hogwartsuser;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
+
+import java.util.Collection;
 
 import static com.fasterxml.jackson.databind.type.LogicalType.Array;
 
