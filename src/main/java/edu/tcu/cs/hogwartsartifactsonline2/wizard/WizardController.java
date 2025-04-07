@@ -48,7 +48,7 @@ public class WizardController {
     public Result addWizard(@Valid @RequestBody WizardDto wizardDto) {
         wizard newWizard = this.wizardDtoToWizardConverter.convert(wizardDto);
         wizard savedWizard = this.wizardService.save(newWizard);
-        WizardDto savedWizardDto = this.wizardDtoToWizardConverter.convert(savedWizard);
+        WizardDto savedWizardDto = this.wizardToWizardDtoConverter.convert(savedWizard);
         return new Result(true, StatusCode.SUCCESS, "Add Success", savedWizardDto);
     }
 

@@ -62,6 +62,6 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return this.userRepository.findByUsername(username)
                 .map(hogwartsUser -> new MyUserPrincipal(hogwartsUser))
-                .orElseThrow(() -> new UserNotFoundException("username " + username + " is not found."));
+                .orElseThrow(() -> new UsernameNotFoundException("username " + username + " is not found."));
     }
 }
