@@ -1,10 +1,11 @@
 package edu.tcu.cs.hogwartsartifactsonline2.security;
 
+
 import edu.tcu.cs.hogwartsartifactsonline2.system.Result;
 import edu.tcu.cs.hogwartsartifactsonline2.system.StatusCode;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

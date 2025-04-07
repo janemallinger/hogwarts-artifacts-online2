@@ -4,11 +4,12 @@ import edu.tcu.cs.hogwartsartifactsonline2.hogwartsuser.HogwartsUser;
 import edu.tcu.cs.hogwartsartifactsonline2.hogwartsuser.MyUserPrincipal;
 import edu.tcu.cs.hogwartsartifactsonline2.hogwartsuser.converter.UserToUserDtoConverter;
 import edu.tcu.cs.hogwartsartifactsonline2.hogwartsuser.dto.UserDto;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 @Service
 public class AuthService {
@@ -17,13 +18,13 @@ public class AuthService {
 
     private final UserToUserDtoConverter userToUserDtoConverter;
 
-    public AuthService(JwtProvider jwtProvider) {
+    public AuthService(JwtProvider jwtProvider, UserToUserDtoConverter userToUserDtoConverter) {
         this.jwtProvider = jwtProvider;
         this.userToUserDtoConverter = userToUserDtoConverter;
     }
 
     public Map<String, Object> createLoginInfo(Authentication authentication) {
-        MyUserPrincipal principal = (MyUserPrincipal)authentication.getPrinciple();
+        MyUserPrincipal principal = (MyUserPrincipal)authentication.getPrincipal();
         HogwartsUser hogwartsUser = principal.getHogwartsUser();
         UserDto userDto = this.userToUserDtoConverter.convert(hogwartsUser);
 

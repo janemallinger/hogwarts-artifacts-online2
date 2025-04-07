@@ -1,5 +1,6 @@
 package edu.tcu.cs.hogwartsartifactsonline2.artifact;
 
+import edu.tcu.cs.hogwartsartifactsonline2.wizard.wizard;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -57,4 +58,6 @@ public class artifact implements Serializable {
     public void setOwner(wizard owner) {
         this.owner = owner;
     }
+
+
 }

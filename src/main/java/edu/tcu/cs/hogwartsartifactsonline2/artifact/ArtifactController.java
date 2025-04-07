@@ -3,6 +3,7 @@ package edu.tcu.cs.hogwartsartifactsonline2.artifact;
 import edu.tcu.cs.hogwartsartifactsonline2.artifact.converter.ArtifactDtoToArtifactConverter;
 import edu.tcu.cs.hogwartsartifactsonline2.artifact.converter.ArtifactToArtifactDtoConverter;
 import edu.tcu.cs.hogwartsartifactsonline2.artifact.dto.ArtifactDto;
+import edu.tcu.cs.hogwartsartifactsonline2.system.StatusCode;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

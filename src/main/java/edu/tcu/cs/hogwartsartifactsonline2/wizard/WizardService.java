@@ -7,6 +7,7 @@ import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -26,7 +27,7 @@ public class WizardService {
 
     public wizard findById(Integer wizardId) {
         return this.wizardRepository.findById(wizardId)
-                .orElseThrow(() -> new ObjectNotFoundException(wizardId));
+                .orElseThrow(() -> new ObjectNotFoundException("wizard",wizardId));
     }
 
     public wizard save(wizard newWizard) {
@@ -34,15 +35,17 @@ public class WizardService {
     }
 
     public wizard update(Integer wizardId, wizard update) {
-        return this.wizardRepository.findById(wizardId).map(oldWizard -> {
-            oldWizard.setName(update.getName());
-            return this.wizardRepository.save(oldWizard);
-        });
+        return this.wizardRepository.findById(wizardId)
+                .map(oldWizard -> {
+                    oldWizard.setName(update.getName());
+                    return this.wizardRepository.save(oldWizard);
+                })
+                .orElseThrow(() -> new ObjectNotFoundException("wizard", wizardId));
     }
 
     public void delete(Integer wizardId) {
         wizard wizardToBeDelete = this.wizardRepository.findById(wizardId)
-                .orElsethrow(() -> new ObjectNotFoundException(wizardId));
+                .orElseThrow(() -> new ObjectNotFoundException("wizard", wizardId));
 
         wizardToBeDelete.removeAllArtifacts();
         this.wizardRepository.deleteById(wizardId);
@@ -50,7 +53,7 @@ public class WizardService {
 
     public void assignArtifact(Integer wizardId, String artifactId) {
         artifact artifactToBeAssigned = this.artifactRepository.findById(artifactId)
-                .orElseThrow(() -> new ObjectNotFoundException("artifact", artifactId));
+                .orElseThrow(() -> new ObjectNotFoundException(Optional.of("artifact"), artifactId));
 
         wizard wizard = this.wizardRepository.findById(wizardId)
                 .orElseThrow(() -> new ObjectNotFoundException("wizard", wizardId));

@@ -48,12 +48,12 @@ public class WizardController {
     public Result addWizard(@Valid @RequestBody WizardDto wizardDto) {
         wizard newWizard = this.wizardDtoToWizardConverter.convert(wizardDto);
         wizard savedWizard = this.wizardService.save(newWizard);
-        WizardDto savedWizardDto = this.wizardDtoToWizardConverter.convert(savedWizard);
+        WizardDto savedWizardDto = this.wizardToWizardDtoConverter.convert(savedWizard);
         return new Result(true, StatusCode.SUCCESS, "Add Success", savedWizardDto);
     }
 
     @PutMapping("/{wizardId}")
-    public Result updateWizard(@PathVariable Interger wizardId, @Valid @RequestBody WizardDto wizardDto) {
+    public Result updateWizard(@PathVariable Integer wizardId, @Valid @RequestBody WizardDto wizardDto) {
         wizard update = this.wizardDtoToWizardConverter.convert(wizardDto);
         wizard updateWizard = this.wizardService.update(wizardId, update);
         WizardDto updatedWizardDto = this.wizardToWizardDtoConverter.convert(updateWizard);
@@ -61,7 +61,7 @@ public class WizardController {
     }
 
     @DeleteMapping("/{wizardId}")
-    public Result deleteWizard(@PathVariable Interger wizardId) {
+    public Result deleteWizard(@PathVariable Integer wizardId) {
         this.wizardService.delete(wizardId);
         return new Result(true, StatusCode.SUCCESS, "Delete Success");
     }
