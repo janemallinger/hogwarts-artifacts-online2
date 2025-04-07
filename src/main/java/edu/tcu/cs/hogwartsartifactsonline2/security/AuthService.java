@@ -4,7 +4,7 @@ import edu.tcu.cs.hogwartsartifactsonline2.hogwartsuser.HogwartsUser;
 import edu.tcu.cs.hogwartsartifactsonline2.hogwartsuser.MyUserPrincipal;
 import edu.tcu.cs.hogwartsartifactsonline2.hogwartsuser.converter.UserToUserDtoConverter;
 import edu.tcu.cs.hogwartsartifactsonline2.hogwartsuser.dto.UserDto;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

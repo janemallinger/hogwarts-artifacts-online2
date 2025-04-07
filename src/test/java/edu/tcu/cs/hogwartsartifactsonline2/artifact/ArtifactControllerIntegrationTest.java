@@ -64,10 +64,10 @@ public class ArtifactControllerIntegrationTest {
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     void testFindAllArtifactsSuccess() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.get(this.baseUrl + "/artifacts").accept(MediaType.APPLICATION_JSON))
-                .andExcept(jsonPath("$.flag").value(true))
-                .andExcept(jsonPath("$.code").value(StatusCode.SUCCESS))
-                .andExcept(jsonPath("$.message").value("Find al success"))
-                .andExcept(jsonPath("$.data", Matchers.hasSize(6)));
+                .andExpect(jsonPath("$.flag").value(true))
+                .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
+                .andExpect(jsonPath("$.message").value("Find All Success"))
+                .andExpect(jsonPath("$.data.content", Matchers.hasSize(6)));
 
     }
 
