@@ -225,7 +225,7 @@ public class WizardServiceTest {
         this.wizardService.assignArtifact(3, "1250808601744904192");
 
         //Then
-        assertThat(a.getOwner().getId()).equalTo(3);
+        assertThat(a.getOwner().getId()).isEqualTo(3);
         assertThat(w3.getArtifacts()).contains(a);
 
     }
@@ -256,7 +256,7 @@ public class WizardServiceTest {
         //Then
         assertThat(thrown)
                 .isInstanceOf(ObjectNotFoundException.class).hasMessage("Could not find");
-        assertThat(a.getOwner().getId()).equalTo(2);
+        assertThat(a.getOwner().getId()).isEqualTo(2);
 
 
     }

@@ -1,6 +1,5 @@
 package edu.tcu.cs.hogwartsartifactsonline2.system.exception;
 
-import edu.tcu.cs.hogwartsartifactsonline2.artifact.ArtifactNotFoundException;
 import edu.tcu.cs.hogwartsartifactsonline2.system.Result;
 import edu.tcu.cs.hogwartsartifactsonline2.system.StatusCode;
 import org.hibernate.ObjectNotFoundException;

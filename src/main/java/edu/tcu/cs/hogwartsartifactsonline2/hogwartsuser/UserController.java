@@ -68,6 +68,7 @@ public class UserController {
         return new Result(true, StatusCode.SUCCESS, "Update Success", updatedUserDto);
     }
 
+
     @DeleteMapping("/{userId}")
     public Result deleteUser(@PathVariable Integer userId) {
         this.userService.delete(userId);

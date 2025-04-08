@@ -1,10 +1,7 @@
 package edu.tcu.cs.hogwartsartifactsonline2.wizard;
 
 import edu.tcu.cs.hogwartsartifactsonline2.artifact.artifact;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,6 +11,7 @@ import java.util.List;
 public class wizard implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String name;
@@ -59,7 +57,7 @@ public class wizard implements Serializable {
 
     public void removeAllArtifacts() {
         this.artifacts.stream().forEach(artifact -> artifact.setOwner(null));
-        this.artifacts = null;
+        this.artifacts = new ArrayList<>();
     }
 
     public void removeArtifact(artifact artifactToBeAssigned) {

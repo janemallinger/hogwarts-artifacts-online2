@@ -8,7 +8,6 @@ import org.springframework.util.StringUtils;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static com.fasterxml.jackson.databind.type.LogicalType.Array;
 
 public class MyUserPrincipal implements UserDetails {
 

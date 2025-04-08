@@ -5,6 +5,7 @@ import edu.tcu.cs.hogwartsartifactsonline2.hogwartsuser.dto.UserDto;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+
 @Component
 public class UserToUserDtoConverter implements Converter<HogwartsUser, UserDto> {
 

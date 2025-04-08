@@ -1,5 +1,6 @@
 package edu.tcu.cs.hogwartsartifactsonline2.security;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -13,12 +14,9 @@ public class CorsConfiguration {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                // allow all origins to access our service
-                registry.addMapping("/**")
-                        .allowedOrigins("*")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH")
-                        .allowedHeaders("*");
+                registry.addMapping("/**"); // Enable CORS for the whole application.
             }
         };
     }
+
 }

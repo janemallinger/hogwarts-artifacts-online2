@@ -1,6 +1,7 @@
 package edu.tcu.cs.hogwartsartifactsonline2.artifact;
 
 import edu.tcu.cs.hogwartsartifactsonline2.artifact.utils.IdWorker;
+import edu.tcu.cs.hogwartsartifactsonline2.system.exception.ObjectNotFoundException;
 import edu.tcu.cs.hogwartsartifactsonline2.wizard.wizard;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -185,8 +186,8 @@ class ArtifactServiceTest {
         given(artifactRepository.findById("1250808601744904192")).willReturn(Optional.empty());
 
         // When
-        assertThrows(ArtifactNotFoundException.class, () -> {
-            artifactService.update("1250808601744904192", update);
+        assertThrows(ObjectNotFoundException.class, () -> {
+            this.artifactService.update("1250808601744904192", update);
         });
 
         // Then
