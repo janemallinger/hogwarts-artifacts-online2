@@ -48,10 +48,12 @@ public class UserController {
         return new Result(true, StatusCode.SUCCESS, "Find One Success", userDto);
     }
 
-
-//    @param newHogwartsUser
-//    @return
-
+    /**
+     * We are not using UserDto, but User, since we require password.
+     *
+     * @param newHogwartsUser
+     * @return
+     */
     @PostMapping
     public Result addUser(@Valid @RequestBody HogwartsUser newHogwartsUser) {
         HogwartsUser savedUser = this.userService.save(newHogwartsUser);
@@ -59,7 +61,6 @@ public class UserController {
         return new Result(true, StatusCode.SUCCESS, "Add Success", savedUserDto);
     }
 
-    // We are not using this to update password, need another changePassword method in this class.
     @PutMapping("/{userId}")
     public Result updateUser(@PathVariable Integer userId, @Valid @RequestBody UserDto userDto) {
         HogwartsUser update = this.userDtoToUserConverter.convert(userDto);
@@ -73,7 +74,5 @@ public class UserController {
         this.userService.delete(userId);
         return new Result(true, StatusCode.SUCCESS, "Delete Success");
     }
-
-
 
 }

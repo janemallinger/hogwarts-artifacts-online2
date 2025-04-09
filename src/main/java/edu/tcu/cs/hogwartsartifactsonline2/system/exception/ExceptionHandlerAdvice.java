@@ -1,10 +1,9 @@
 package edu.tcu.cs.hogwartsartifactsonline2.system.exception;
 
-import edu.tcu.cs.hogwartsartifactsonline2.artifact.ArtifactNotFoundException;
 import edu.tcu.cs.hogwartsartifactsonline2.system.Result;
 import edu.tcu.cs.hogwartsartifactsonline2.system.StatusCode;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +43,7 @@ public class ExceptionHandlerAdvice {
             String val = error.getDefaultMessage();
             map.put(key, val);
         });
-        return new Result(false, StatusCode.INVALID_ARGUMENT, "no", map);
+        return new Result(false, StatusCode.INVALID_ARGUMENT, "Provided arguments are invalid, see data for details.", map);
     }
 
     @ExceptionHandler({UsernameNotFoundException.class, BadCredentialsException.class})

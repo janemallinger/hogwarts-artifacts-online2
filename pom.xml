@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>edu.tcu.cs</groupId>
-    <artifactId>hogwarts-artifacts-online2</artifactId>
+    <artifactId>hogwarts-Artifacts-online2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>hogwarts-artifacts-online2</name>
-    <description>hogwarts-artifacts-online2</description>
+    <name>hogwarts-Artifacts-online2</name>
+    <description>hogwarts-Artifacts-online2</description>
     <url/>
     <licenses>
         <license/>

@@ -45,7 +45,7 @@ public class ArtifactControllerIntegrationTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        ResultActions resultActions = this.mockMvc.perform(post(this.baseUrl + "/users/login").with(httpBasic("john", "12345")));
+        ResultActions resultActions = this.mockMvc.perform(post(this.baseUrl + "/users/login").with(httpBasic("john", "123456")));
         MvcResult mvcResult = resultActions.andDo(print()).andReturn();
         String contentAsString = mvcResult.getResponse().getContentAsString();
         JSONObject json = new JSONObject(contentAsString);
@@ -68,7 +68,7 @@ public class ArtifactControllerIntegrationTest {
     @Test
     void testAddArtifactSuccess() throws Exception {
         //Given
-        artifact a = new artifact();
+        Artifact a = new Artifact();
         a.setName("Cloak");
         a.setDescription("a cloak");
         a.setImageUrl("ImageUrl");
@@ -79,15 +79,15 @@ public class ArtifactControllerIntegrationTest {
         this.mockMvc.perform(post(this.baseUrl + "/artifacts").contentType(MediaType.APPLICATION_JSON).header("authorization", this.token).content(json).accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
-                .andExpect(jsonPath("$.message").value("Add success"))
+                .andExpect(jsonPath("$.message").value("Add Success"))
                 .andExpect(jsonPath("$.data.id").isNotEmpty())
-                .andExpect(jsonPath("$.data.name").value("cloak"))
+                .andExpect(jsonPath("$.data.name").value("Cloak"))
                 .andExpect(jsonPath("$.data.description").value("a cloak"))
-                .andExpect(jsonPath("$.data.imageUrl").value("imageUrl"));
+                .andExpect(jsonPath("$.data.imageUrl").value("ImageUrl"));
         this.mockMvc.perform(get(this.baseUrl + "/artifacts").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
-                .andExpect(jsonPath("$.message").value("Find all success"))
+                .andExpect(jsonPath("$.message").value("Find All Success"))
                 .andExpect(jsonPath("$.data", Matchers.hasSize(7)));
 
     }

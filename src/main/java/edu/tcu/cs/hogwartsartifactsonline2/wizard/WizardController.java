@@ -5,6 +5,9 @@ import edu.tcu.cs.hogwartsartifactsonline2.system.StatusCode;
 import edu.tcu.cs.hogwartsartifactsonline2.wizard.WizardDto.WizardDto;
 import edu.tcu.cs.hogwartsartifactsonline2.wizard.converter.WizardDtoToWizardConverter;
 import edu.tcu.cs.hogwartsartifactsonline2.wizard.converter.WizardToWizardDtoConverter;
+
+
+
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,14 +15,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping ("${api.endpoint.base-url}/wizards")
+@RequestMapping("${api.endpoint.base-url}/wizards")
 public class WizardController {
 
     private final WizardService wizardService;
 
-    private final WizardDtoToWizardConverter wizardDtoToWizardConverter;
+    private final WizardDtoToWizardConverter wizardDtoToWizardConverter; // Convert WizardDto to Wizard.
 
-    private final WizardToWizardDtoConverter wizardToWizardDtoConverter;
+    private final WizardToWizardDtoConverter wizardToWizardDtoConverter; // Convert Wizard to WizardDto.
+
 
     public WizardController(WizardService wizardService, WizardDtoToWizardConverter wizardDtoToWizardConverter, WizardToWizardDtoConverter wizardToWizardDtoConverter) {
         this.wizardService = wizardService;
@@ -27,37 +31,38 @@ public class WizardController {
         this.wizardToWizardDtoConverter = wizardToWizardDtoConverter;
     }
 
-    @GetMapping()
+    @GetMapping
     public Result findAllWizards() {
-        List<wizard> foundWizards = this.wizardService.findAll();
+        List<Wizard> foundWizards = this.wizardService.findAll();
 
+        // Convert foundWizards to a list of WizardDtos.
         List<WizardDto> wizardDtos = foundWizards.stream()
                 .map(this.wizardToWizardDtoConverter::convert)
                 .collect(Collectors.toList());
-        return new Result(true, StatusCode.SUCCESS, "Find All Wizards", wizardDtos);
+        return new Result(true, StatusCode.SUCCESS, "Find All Success", wizardDtos);
     }
 
     @GetMapping("/{wizardId}")
     public Result findWizardById(@PathVariable Integer wizardId) {
-        wizard foundWizard = this.wizardService.findById(wizardId);
+        Wizard foundWizard = this.wizardService.findById(wizardId);
         WizardDto wizardDto = this.wizardToWizardDtoConverter.convert(foundWizard);
-        return new Result(true, StatusCode.SUCCESS, "Find by ID", wizardDto);
+        return new Result(true, StatusCode.SUCCESS, "Find One Success", wizardDto);
     }
 
     @PostMapping
     public Result addWizard(@Valid @RequestBody WizardDto wizardDto) {
-        wizard newWizard = this.wizardDtoToWizardConverter.convert(wizardDto);
-        wizard savedWizard = this.wizardService.save(newWizard);
+        Wizard newWizard = this.wizardDtoToWizardConverter.convert(wizardDto);
+        Wizard savedWizard = this.wizardService.save(newWizard);
         WizardDto savedWizardDto = this.wizardToWizardDtoConverter.convert(savedWizard);
         return new Result(true, StatusCode.SUCCESS, "Add Success", savedWizardDto);
     }
 
     @PutMapping("/{wizardId}")
     public Result updateWizard(@PathVariable Integer wizardId, @Valid @RequestBody WizardDto wizardDto) {
-        wizard update = this.wizardDtoToWizardConverter.convert(wizardDto);
-        wizard updateWizard = this.wizardService.update(wizardId, update);
-        WizardDto updatedWizardDto = this.wizardToWizardDtoConverter.convert(updateWizard);
-        return new Result(true, StatusCode.SUCCESS, "updated success", updatedWizardDto);
+        Wizard update = this.wizardDtoToWizardConverter.convert(wizardDto);
+        Wizard updatedWizard = this.wizardService.update(wizardId, update);
+        WizardDto updatedWizardDto = this.wizardToWizardDtoConverter.convert(updatedWizard);
+        return new Result(true, StatusCode.SUCCESS, "Update Success", updatedWizardDto);
     }
 
     @DeleteMapping("/{wizardId}")
@@ -69,6 +74,7 @@ public class WizardController {
     @PutMapping("/{wizardId}/artifacts/{artifactId}")
     public Result assignArtifact(@PathVariable Integer wizardId, @PathVariable String artifactId) {
         this.wizardService.assignArtifact(wizardId, artifactId);
-        return new Result(true, StatusCode.SUCCESS, "Assign Success");
+        return new Result(true, StatusCode.SUCCESS, "Artifact Assignment Success");
     }
+
 }

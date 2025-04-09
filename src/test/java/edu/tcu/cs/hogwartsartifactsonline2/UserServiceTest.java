@@ -1,9 +1,10 @@
 package edu.tcu.cs.hogwartsartifactsonline2;
 
+
 import edu.tcu.cs.hogwartsartifactsonline2.hogwartsuser.HogwartsUser;
 import edu.tcu.cs.hogwartsartifactsonline2.hogwartsuser.UserRepository;
 import edu.tcu.cs.hogwartsartifactsonline2.hogwartsuser.UserService;
-import org.hibernate.ObjectNotFoundException;
+import edu.tcu.cs.hogwartsartifactsonline2.system.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.*;
@@ -73,22 +75,21 @@ class UserServiceTest {
 
     @Test
     void testFindAllSuccess() {
-        // Given. Arrange inputs and targets. Define the behavior of Mock object userRepository.
+        // Given
         given(this.userRepository.findAll()).willReturn(this.hogwartsUsers);
 
-        // When. Act on the target behavior. Act steps should cover the method to be tested.
+        // When
         List<HogwartsUser> actualUsers = this.userService.findAll();
 
-        // Then. Assert expected outcomes.
+        // Then
         assertThat(actualUsers.size()).isEqualTo(this.hogwartsUsers.size());
 
-        // Verify userRepository.findAll() is called exactly once.
         verify(this.userRepository, times(1)).findAll();
     }
 
     @Test
     void testFindByIdSuccess() {
-        // Given. Arrange inputs and targets. Define the behavior of Mock object userRepository.
+        // Given
         HogwartsUser u = new HogwartsUser();
         u.setId(1);
         u.setUsername("john");
@@ -98,10 +99,10 @@ class UserServiceTest {
 
         given(this.userRepository.findById(1)).willReturn(Optional.of(u)); // Define the behavior of the mock object.
 
-        // When. Act on the target behavior. Act steps should cover the method to be tested.
+        // When
         HogwartsUser returnedUser = this.userService.findById(1);
 
-        // Then. Assert expected outcomes.
+        // Then
         assertThat(returnedUser.getId()).isEqualTo(u.getId());
         assertThat(returnedUser.getUsername()).isEqualTo(u.getUsername());
         assertThat(returnedUser.getPassword()).isEqualTo(u.getPassword());
@@ -136,7 +137,7 @@ class UserServiceTest {
         newUser.setEnabled(true);
         newUser.setRoles("user");
 
-        given(this.passwordEncoder.encode(newUser.getPassword())).willReturn("encodded password");
+        given(this.passwordEncoder.encode(newUser.getPassword())).willReturn("Encoded Password");
         given(this.userRepository.save(newUser)).willReturn(newUser);
 
         // When

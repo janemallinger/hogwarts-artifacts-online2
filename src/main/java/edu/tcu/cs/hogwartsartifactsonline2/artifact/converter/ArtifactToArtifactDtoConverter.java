@@ -1,13 +1,13 @@
 package edu.tcu.cs.hogwartsartifactsonline2.artifact.converter;
 
-import edu.tcu.cs.hogwartsartifactsonline2.artifact.artifact;
+import edu.tcu.cs.hogwartsartifactsonline2.artifact.Artifact;
 import edu.tcu.cs.hogwartsartifactsonline2.artifact.dto.ArtifactDto;
 import edu.tcu.cs.hogwartsartifactsonline2.wizard.converter.WizardToWizardDtoConverter;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ArtifactToArtifactDtoConverter implements Converter<artifact, ArtifactDto> {
+public class ArtifactToArtifactDtoConverter implements Converter<Artifact, ArtifactDto> {
 
     private final WizardToWizardDtoConverter wizardToWizardDtoConverter;
 
@@ -16,7 +16,7 @@ public class ArtifactToArtifactDtoConverter implements Converter<artifact, Artif
     }
 
     @Override
-    public ArtifactDto convert(artifact source) {
+    public ArtifactDto convert(Artifact source) {
         ArtifactDto artifactDto = new ArtifactDto(source.getId(),
                 source.getName(),
                 source.getDescription(),
